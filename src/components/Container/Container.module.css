@@ -1,0 +1,15 @@
+.container {
+  width: 400px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 40;
+  color: #010101;
+  margin-top: 50px;
+  font-family: 'Shadows Into Light', cursive;
+  border: 4px solid #2b58a6;
+  border-radius: 4px;
+  padding: 20px;
+}
