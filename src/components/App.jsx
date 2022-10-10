@@ -47,8 +47,9 @@ export default function App() {
     }
   };
 
-  const changeFilter = e => {
-    setFilter({ filter: e.currentTarget.value });
+  const changeFilter = event => {
+    const { value } = event.currentTarget;
+    setFilter(value);
   };
 
   const deleteContact = contactId => {
@@ -59,7 +60,6 @@ export default function App() {
     contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-  console.log(contacts.length);
 
   return (
     <>
