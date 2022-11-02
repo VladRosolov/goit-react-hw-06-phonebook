@@ -1,14 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import css from './Phonebook.module.css';
 import { useState } from 'react';
 import shortId from 'shortid';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact, getContacts } from 'store/ContactsSlice';
 
-export default function Phonebook({ onSubmit }) {
+export default function Phonebook() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const id = shortId.generate();
-  const data = { name, number, id };
 
   let nameInputId = shortId.generate();
   let numberInputId = shortId.generate();
@@ -30,14 +29,29 @@ export default function Phonebook({ onSubmit }) {
     }
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    onSubmit(data);
-    reset();
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+
+  const contactIsExist = (name, number) => {
+    return contacts.find(
+      item =>
+        item.name.toLocaleLowerCase() === name.toLocaleLowerCase() ||
+        item.number === number
+    );
   };
-  const reset = () => {
+
+  const addContacts = (name, number) => {
+    if (contactIsExist(name, number)) {
+      return alert(`${name} ${number} is already in Phonebook`);
+    }
+    dispatch(addContact({ name, number }));
     setName('');
     setNumber('');
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    addContacts(name, number);
   };
 
   return (
@@ -78,5 +92,3 @@ export default function Phonebook({ onSubmit }) {
     </>
   );
 }
-
-Phonebook.propTypes = { onSubmit: PropTypes.func.isRequired };

@@ -1,19 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import css from './FormFilter.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from 'store/FilterSlice';
 
-const FormFilter = ({ filter, onChange }) => {
+const FormFilter = () => {
+  const dispatch = useDispatch();
+  const filterValue = useSelector(state => state.filter);
+
+  const filterOnChange = e => {
+    dispatch(setFilter(e.currentTarget.value.toLowerCase()));
+  };
   return (
     <label>
       <span className={css.filter__title}>Find contacts by name</span>
-      <input type="text" value={filter} onChange={onChange} />
+      <input type="text" value={filterValue} onChange={filterOnChange} />
     </label>
   );
-};
-
-FormFilter.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
 };
 
 export default FormFilter;
